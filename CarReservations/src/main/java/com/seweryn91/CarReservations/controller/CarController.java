@@ -14,9 +14,6 @@ import java.util.stream.Collectors;
 public class CarController {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
     private CarDAO carDAO;
 
     @Autowired

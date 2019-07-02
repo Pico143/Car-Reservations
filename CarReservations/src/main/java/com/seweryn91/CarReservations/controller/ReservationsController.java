@@ -1,7 +1,7 @@
 package com.seweryn91.CarReservations.controller;
 
-import com.seweryn91.CarReservations.dao.ReservationDAO;
 import com.seweryn91.CarReservations.model.Reservation;
+import com.seweryn91.CarReservations.repository.ReservationRepository;
 import com.seweryn91.CarReservations.utils.JSONFormatter;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,16 +9,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ReservationsController {
 
     @Autowired
-    private SessionFactory sessionFactory;
-
-    @Autowired
-    private ReservationDAO reservationDAO;
+    private ReservationRepository reservationRepository;
 
     @Autowired
     private JSONFormatter jsonFormatter;
@@ -27,7 +25,8 @@ public class ReservationsController {
     private String getAllReservations() {
         StringBuilder sb = new StringBuilder();
         try {
-            List<Reservation> reservations = reservationDAO.getAllReservations();
+            List<Reservation> reservations = new ArrayList<>();
+            reservationRepository.findAll().forEach(reservations::add);
             sb.append(jsonFormatter.serializeCollectionReservations(reservations));
         } catch (Exception e) {
             e.printStackTrace();
@@ -35,7 +34,8 @@ public class ReservationsController {
         return sb.toString();
     }
 
-    public Double getPrice(long reservationId) {
-        return reservationDAO.getPrice(reservationId);
-    }
+    // sama rezerwacja powinna mieć getPrice (i pole z ceną) - nie ma , więc zakomentowuję
+//    public Double getPrice(long reservationId) {
+//        return reservationDAO.getPrice(reservationId);
+//    }
 }

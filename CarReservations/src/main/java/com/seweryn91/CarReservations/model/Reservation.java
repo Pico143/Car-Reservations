@@ -3,6 +3,7 @@ package com.seweryn91.CarReservations.model;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.ValidationException;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
@@ -62,12 +63,26 @@ public class Reservation {
 
 
     //TODO: Implement Date validation
-    public void setStartDate(Date startDate) { this.startDate = startDate; }
+    public void setStartDate(Date startDate) {
+        if (this.endDate == null || this.startDate.before(this.endDate)) {
+            this.endDate = endDate;
+        }
+        else {
+            throw new ValidationException("data po nie może być przed datą do");
+        }
+    }
 
     public Date getEndDate() { return endDate; }
 
     //TODO: Implement Date validation
-    public void setEndDate(Date endDate) { this.endDate = endDate; }
+    public void setEndDate(Date endDate) {
+        if (this.startDate == null || this.endDate.after(this.startDate)) {
+            this.endDate = endDate;
+        }
+        else {
+            throw new ValidationException("data po nie może być przed datą do");
+        }
+    }
 
 
     @Override

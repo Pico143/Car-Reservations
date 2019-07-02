@@ -1,7 +1,6 @@
 package com.seweryn91.CarReservations.dao;
 
 import com.seweryn91.CarReservations.model.Customer;
-import org.hibernate.SessionFactory;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,7 +15,7 @@ class CustomerDAOTest {
 
     @Autowired
     private CustomerDAO customerDAO;
-    private SessionFactory sessionFactory;
+
     private long testCustomerId;
 
     @BeforeAll
